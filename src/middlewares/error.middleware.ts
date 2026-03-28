@@ -1,12 +1,15 @@
-import {Request, Response, NextFunction} from "express";
+import { Request, Response, NextFunction } from "express";
 
-class ErrorMiddleware {
-    static handle(err: any, req: Request, res: Response, next: NextFunction) {
-        res.status(err.status || 500).json({
-            success: false,
-            message: err.message || "Internal Server Error"
-        });
-    }
-}
+const errorMiddleware = (
+  err: any,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+) => {
+  res.status(500).json({
+    success: false,
+    message: err.message,
+  });
+};
 
-export default ErrorMiddleware;
+export default errorMiddleware;
