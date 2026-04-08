@@ -1,14 +1,16 @@
-import db from "../config/mySql.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import AuthRepository from "../repositories/auth.repository.js";
 
 class AuthService {
-  async login(Email: string, password: string) {
-    const [rows]: any = await db.query("SELECT * FROM users WHERE Email = ?", [
-      Email,
-    ]);
+  private repo: AuthRepository;
 
-    const user = rows[0];
+  constructor() {
+    this.repo = new AuthRepository();
+  }
+
+  async login(Email: string, password: string) {
+    const user = await this.repo.findByEmail(Email);
 
     if (!user) throw new Error("User not found");
 
