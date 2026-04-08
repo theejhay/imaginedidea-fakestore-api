@@ -1,36 +1,31 @@
-import db from "../config/mySql.js";
 import bcrypt from "bcrypt";
+import UserRepository from "../repositories/user.repository.js";
 
 class UserService {
+  private repo: UserRepository;
+
+  constructor() {
+    this.repo = new UserRepository();
+  }
+
   async createUser(data: any) {
     const { Username, Email, password } = data;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const [result]: any = await db.query(
-      "INSERT INTO users (Username, Email, password) VALUES (?, ?, ?)",
-      [Username, Email, hashedPassword],
-    );
-
-    return {
-      id: result.insertId,
+    return this.repo.create({
       Username,
       Email,
-    };
+      password: hashedPassword,
+    });
   }
 
   async getUsers() {
-    const [rows]: any = await db.query("SELECT id, Username, Email FROM users");
-    return rows;
+    return this.repo.findAll();
   }
 
   async getUserById(id: string) {
-    const [rows]: any = await db.query(
-      "SELECT id, Username, Email FROM users WHERE id = ?",
-      [id],
-    );
-
-    const user = rows[0];
+    const user = await this.repo.findById(id);
 
     if (!user) {
       throw new Error("User not found");
