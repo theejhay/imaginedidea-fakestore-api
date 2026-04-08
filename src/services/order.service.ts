@@ -1,7 +1,11 @@
-import OrderModel from "../models/order.model.js";
+import OrderRepository from "../repositories/order.repository.js";
 
 class OrderService {
-  model = new OrderModel();
+  private repo: OrderRepository;
+
+  constructor() {
+    this.repo = new OrderRepository();
+  }
 
   async createOrder(data: any) {
     const { userId, items } = data;
@@ -11,10 +15,10 @@ class OrderService {
       totalAmount += item.price * item.quantity;
     }
 
-    const orderId = await this.model.createOrder(userId, totalAmount);
+    const orderId = await this.repo.createOrder(userId, totalAmount);
 
     for (const item of items) {
-      await this.model.createOrderItem(
+      await this.repo.createOrderItem(
         orderId,
         item.productId,
         item.quantity,
@@ -32,10 +36,10 @@ class OrderService {
   }
 
   async getMyOrders(userId: number) {
-    const orders = await this.model.getOrdersByUser(userId);
+    const orders = await this.repo.findOrdersByUser(userId);
 
     for (const order of orders) {
-      const items = await this.model.getOrderItems(order.id);
+      const items = await this.repo.findOrderItems(order.id);
       order.items = items;
     }
 
