@@ -39,6 +39,24 @@ class OrderRepository {
 
     return rows;
   }
+
+  async findOrderById(orderId: number) {
+    const [rows]: any = await db.query("SELECT * FROM orders WHERE id = ?", [
+      orderId,
+    ]);
+
+    return rows[0];
+  }
+
+  async deleteOrder(orderId: number) {
+    await db.query("DELETE FROM order_items WHERE order_id = ?", [orderId]);
+
+    const [result]: any = await db.query("DELETE FROM orders WHERE id = ?", [
+      orderId,
+    ]);
+
+    return result;
+  }
 }
 
 export default OrderRepository;

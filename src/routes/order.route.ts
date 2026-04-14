@@ -14,5 +14,7 @@ router.post(
   controller.createOrder,
 );
 router.get("/me", authMiddleware, controller.getMyOrders);
+router.get("/:id", authMiddleware, controller.getOrderById);
+router.delete("/:id", authMiddleware, controller.deleteOrder);
 
 export default router;

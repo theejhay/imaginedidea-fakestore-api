@@ -45,6 +45,33 @@ class OrderService {
 
     return orders;
   }
+
+  async getOrderById(orderId: number) {
+    const order = await this.repo.findOrderById(orderId);
+
+    if (!order) {
+      throw new Error("Order not found");
+    }
+
+    const items = await this.repo.findOrderItems(orderId);
+
+    return {
+      ...order,
+      items,
+    };
+  }
+
+  async deleteOrder(orderId: number) {
+    const order = await this.repo.findOrderById(orderId);
+
+    if (!order) {
+      throw new Error("Order not found");
+    }
+
+    await this.repo.deleteOrder(orderId);
+
+    return { message: "Order deleted successfully" };
+  }
 }
 
 export default OrderService;

@@ -57,6 +57,28 @@ class UserController {
       });
     },
   );
+
+  updateUser = asyncHandler(async (req: Request<UserParams>, res: Response) => {
+    const { id } = req.params;
+
+    const updatedUser = await this.service.updateUser(id, req.body);
+
+    res.json({
+      success: true,
+      data: updatedUser,
+    });
+  });
+
+  deleteUser = asyncHandler(async (req: Request<UserParams>, res: Response) => {
+    const { id } = req.params;
+
+    const result = await this.service.deleteUser(id);
+
+    res.json({
+      success: true,
+      data: result,
+    });
+  });
 }
 
 export default UserController;

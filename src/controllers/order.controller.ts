@@ -30,6 +30,28 @@ class OrderController {
       data: orders,
     });
   });
+
+  getOrderById = asyncHandler(async (req: any, res: Response) => {
+    const orderId = Number(req.params.id);
+
+    const order = await this.service.getOrderById(orderId);
+
+    res.json({
+      success: true,
+      data: order,
+    });
+  });
+
+  deleteOrder = asyncHandler(async (req: any, res: Response) => {
+    const orderId = Number(req.params.id);
+
+    const result = await this.service.deleteOrder(orderId);
+
+    res.json({
+      success: true,
+      data: result,
+    });
+  });
 }
 
 export default OrderController;
