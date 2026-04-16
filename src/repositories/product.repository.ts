@@ -20,6 +20,14 @@ class ProductRepository {
   async findById(id: string) {
     return Product.findById(id);
   }
+
+  async update(id: string, data: any) {
+    return Product.findByIdAndUpdate(id, data);
+  }
+
+  async delete(id: string) {
+    return Product.findByIdAndDelete(id);
+  }
 }
 
 export default ProductRepository;
