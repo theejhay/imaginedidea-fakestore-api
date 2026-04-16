@@ -18,4 +18,6 @@ router.post("/",
 
 router.get("/", cartController.getCarts);
 router.get("/:id", cartController.getCartById);
+router.patch("/:id", cartController.updateCart);
+router.delete("/:id", cartController.deleteCart);
 export default router;

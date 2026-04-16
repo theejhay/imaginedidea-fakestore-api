@@ -20,6 +20,13 @@ class CartService{
     return this.repo.findById(id);
   }
 
+  async updateCart(id: any, data: any){
+    return this.repo.update(id, data);
+  }
+
+  async deleteCart(id: any){
+    return this.repo.delete(id);
+  }
 }
 
 export default CartService;
