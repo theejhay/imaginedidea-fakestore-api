@@ -28,6 +28,22 @@ class CartController {
       data: cart,
     });
   });
+
+  updateCart = asyncHandler(async (req: Request, res: Response) => {
+    const cart = await this.service.updateCart(req.params.id, req.body);
+    res.json({
+      success: true,
+      data: cart,
+    });
+  });
+
+  deleteCart = asyncHandler(async (req: Request, res: Response) => {
+    const cart = await this.service.deleteCart(req.params.id);
+    res.json({
+      success: true,
+      data: cart,
+    });
+  });
 }
 
 export default CartController;

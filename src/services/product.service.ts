@@ -18,6 +18,13 @@ class ProductService {
   async getProductById(id: any) {
     return this.repo.findById(id);
   }
+  async updateProduct(id: any, data: any) {
+    return this.repo.update(id, data);
+  }
+
+  async deleteProduct(id: any) {
+    return this.repo.delete(id);
+  }
 }
 
 export default ProductService;
