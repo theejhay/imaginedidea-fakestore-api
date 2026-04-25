@@ -21,7 +21,7 @@ class CartRepository {
     return Cart.findById(id);
   }
   async update(id: string, data: CreateCartDTO) {
-    return Cart.findByIdAndUpdate(id, data);
+    return Cart.findByIdAndUpdate(id, data, { new: true });
   }
 
   async delete(id: string) {

@@ -21,7 +21,7 @@ class ProductRepository {
     return Product.findById(id);
   }
   async update(id: string, data: any) {
-    return Product.findByIdAndUpdate(id, data);
+    return Product.findByIdAndUpdate(id, data, { new: true });
   }
 
   async delete(id: string) {
