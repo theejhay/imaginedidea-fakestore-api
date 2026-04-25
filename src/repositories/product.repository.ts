@@ -20,7 +20,7 @@ class ProductRepository {
   async findById(id: string) {
     return Product.findById(id);
   }
-  async update(id: string, data: any) {
+  async update(id: string, data: CreateProductDTO) {
     return Product.findByIdAndUpdate(id, data, { new: true });
   }
 
