@@ -1,0 +1,30 @@
+services:
+  app:
+    build: .
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    depends_on:
+       - mongo 
+       - mysql
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    command: ["mongod", "--bind_ip_all"]
+    volumes:
+      - mongo-data:/data/db
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: taiwo0277
+      MYSQL_DATABASE: fakestore_api
+    volumes:
+      - mysql_data:/data/db/mysql
+
+volumes:
+  mongo-data:
+  mysql_data:
