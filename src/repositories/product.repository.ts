@@ -8,6 +8,14 @@ interface CreateProductDTO {
   image: string;
 }
 
+interface UpdateProductDTO {
+  title?: string;
+  price?: number;
+  description?: string;
+  category?: string;
+  image?: string;
+}
+
 class ProductRepository {
   async create(data: CreateProductDTO) {
     return Product.create(data);
@@ -20,7 +28,7 @@ class ProductRepository {
   async findById(id: string) {
     return Product.findById(id);
   }
-  async update(id: string, data: CreateProductDTO) {
+  async update(id: string, data: UpdateProductDTO) {
     return Product.findByIdAndUpdate(id, data, { new: true });
   }
 
