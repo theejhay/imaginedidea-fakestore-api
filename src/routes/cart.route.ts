@@ -17,6 +17,6 @@ router.post(
 
 router.get("/", cartController.getCarts);
 router.get("/:id", cartController.getCartById);
-router.patch("/:id", cartController.updateCart);
-router.delete("/:id", cartController.deleteCart);
+router.put("/:id", authMiddleware, cartController.updateCart);
+router.delete("/:id", authMiddleware, cartController.deleteCart);
 export default router;
