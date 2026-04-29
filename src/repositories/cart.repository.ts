@@ -1,9 +1,13 @@
 import Cart from "../models/cart.model.js";
 
 interface CreateCartDTO {
-  userId: string;
+  userId: number;
   productId: string;
   quantity: number;
+}
+
+interface UpdateCartDTO{
+  quantity?: number;
 }
 
 class CartRepository {
@@ -18,7 +22,7 @@ class CartRepository {
   async findById(id: string) {
     return Cart.findById(id);
   }
-  async update(id: string, data: CreateCartDTO) {
+  async update(id: string, data: UpdateCartDTO) {
     return Cart.findByIdAndUpdate(id, data, { new: true });
   }
 
