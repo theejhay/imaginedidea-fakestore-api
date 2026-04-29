@@ -1,13 +1,13 @@
 import Cart from "../models/cart.model.js";
 
 interface CreateCartDTO {
-  userId: String;
-  productId: String;
-  quantity: Number;
+  userId: string;
+  productId: string;
+  quantity: number;
 }
 
 class CartRepository {
-  async create(data: any) {
+  async create(data: CreateCartDTO) {
     return Cart.create(data);
   }
 
