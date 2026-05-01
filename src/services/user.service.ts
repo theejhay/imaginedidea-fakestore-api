@@ -1,21 +1,27 @@
-import bcrypt from "bcrypt";
 import UserRepository from "../repositories/user.repository.js";
+import bcrypt from "bcrypt";
 
 class UserService {
-  private repo: UserRepository;
+  private repo = new UserRepository();
 
-  constructor() {
-    this.repo = new UserRepository();
-  }
+  async createUser(data: {
+    username: string;
+    email: string;
+    password: string;
+  }) {
+    const { username, email, password } = data;
 
-  async createUser(data: any) {
-    const { Username, Email, password } = data;
+    const existingUser = await this.repo.findByEmail(email);
+
+    if (existingUser) {
+      throw new Error("Email already exists");
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     return this.repo.create({
-      Username,
-      Email,
+      username,
+      email,
       password: hashedPassword,
     });
   }
@@ -27,18 +33,15 @@ class UserService {
   async getUserById(id: string) {
     const user = await this.repo.findById(id);
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+    if (!user) throw new Error("User not found");
 
     return user;
   }
+
   async updateUser(id: string, data: any) {
     const user = await this.repo.findById(id);
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+    if (!user) throw new Error("User not found");
 
     return this.repo.update(id, data);
   }
@@ -46,9 +49,7 @@ class UserService {
   async deleteUser(id: string) {
     const user = await this.repo.findById(id);
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+    if (!user) throw new Error("User not found");
 
     await this.repo.delete(id);
 

@@ -1,11 +1,11 @@
 import db from "../config/mySql.js";
 
 class AuthRepository {
-  async findByEmail(Email: string) {
-    const [rows]: any = await db.query("SELECT * FROM users WHERE Email = ?", [
-      Email,
-    ]);
-
+  async findByEmail(email: string) {
+    const [rows]: any = await db.query(
+      "SELECT id, username, email, password FROM users WHERE email = ?",
+      [email],
+    );
     return rows[0];
   }
 }
