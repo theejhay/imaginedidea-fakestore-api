@@ -1,13 +1,9 @@
 import Joi from "joi";
-import Cart from "../models/cart.model.js";
 
 const CartSchema = Joi.object({
-  Cartproduct: Joi.array(),
-  title: Joi.string().min(3).max(30).required(),
-  price: Joi.number().min(0).required(),
-  description: Joi.string().min(3).max(200).required(),
-  category: Joi.string().max(50).required(),
-  image: Joi.string().required(),
+  userId: Joi.string().required(),
+  productId: Joi.string().required(),
+  quantity: Joi.number().min(1).max(100).required()
 });
 
 export default CartSchema;
