@@ -6,8 +6,10 @@ services:
     env_file:
       - .env
     depends_on:
-       - mongo 
-       - mysql
+      mongo:
+        condition: service_started
+      mysql:
+        condition: service_healthy
   mongo:
     image: mongo:latest
     ports:
@@ -24,6 +26,12 @@ services:
       MYSQL_DATABASE: fakestore_api
     volumes:
       - mysql_data:/data/db/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ptaiwo0277"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
 volumes:
   mongo-data:
