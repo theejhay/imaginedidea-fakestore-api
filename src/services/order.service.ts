@@ -1,8 +1,5 @@
 import OrderRepository from "../repositories/order.repository.js";
-<<<<<<< HEAD
 import type { Order } from "../models/order.type.js";
-=======
->>>>>>> f6c895a32070737cc5a839ee4a4e985926d95684
 
 class OrderService {
   private repo: OrderRepository;
@@ -15,10 +12,7 @@ class OrderService {
     const { userId, items } = data;
 
     let totalAmount = 0;
-<<<<<<< HEAD
 
-=======
->>>>>>> f6c895a32070737cc5a839ee4a4e985926d95684
     for (const item of items) {
       totalAmount += item.price * item.quantity;
     }
@@ -46,7 +40,6 @@ class OrderService {
   async getMyOrders(userId: number) {
     const orders = await this.repo.findOrdersByUser(userId);
 
-<<<<<<< HEAD
     const ordersWithItems = await Promise.all(
       (orders as Order[]).map(async (order) => {
         const items = await this.repo.findOrderItems(order.id);
@@ -59,14 +52,6 @@ class OrderService {
     );
 
     return ordersWithItems;
-=======
-    for (const order of orders) {
-      const items = await this.repo.findOrderItems(order.id);
-      order.items = items;
-    }
-
-    return orders;
->>>>>>> f6c895a32070737cc5a839ee4a4e985926d95684
   }
 
   async getOrderById(orderId: number) {
