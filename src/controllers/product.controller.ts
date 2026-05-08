@@ -42,7 +42,6 @@ class ProductController {
     const product = await this.service.deleteProduct(req.params.id);
     res.status(204).json({
       success: true,
-      data: product,
     });
   });
 }
