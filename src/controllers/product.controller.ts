@@ -39,10 +39,8 @@ class ProductController {
   });
 
   deleteProduct = asyncHandler(async (req: Request, res: Response) => {
-    const product = await this.service.deleteProduct(req.params.id);
-    res.status(204).json({
-      success: true,
-    });
+    await this.service.deleteProduct(req.params.id);
+    res.sendStatus(204);
   });
 }
 

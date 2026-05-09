@@ -1,5 +1,14 @@
+import mongoose from "mongoose";
 import ProductRepository from "../repositories/product.repository.js";
 
+  function validateObjectId(id: string){
+    if(!mongoose.isValidObjectId(id)){
+      const err: any = new Error("Invalid product ID");
+      err.statusCode = 400;
+      throw err;
+    }
+    
+  }
 class ProductService {
   private repo: ProductRepository;
 
@@ -16,6 +25,7 @@ class ProductService {
   }
 
   async getProductById(id: any) {
+    validateObjectId(id);
     return this.repo.findById(id);
   }
   async updateProduct(id: any, data: any) {
@@ -23,6 +33,13 @@ class ProductService {
   }
 
   async deleteProduct(id: any) {
+    validateObjectId(id);
+    const product = await this.repo.findById(id);
+    if(!product){
+      const err: any = new Error("Product not found!")
+      err.statusCode = 404;
+      throw err;
+    }
     return this.repo.delete(id);
   }
 }
