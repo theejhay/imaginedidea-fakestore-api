@@ -23,6 +23,7 @@ class ProductController {
 
   getProductById = asyncHandler(async (req: Request, res: Response) => {
     const product = await this.service.getProductById(req.params.id);
+    if (!product) throw new Error("product not found");
     res.json({
       success: true,
       data: product,
@@ -38,11 +39,8 @@ class ProductController {
   });
 
   deleteProduct = asyncHandler(async (req: Request, res: Response) => {
-    const product = await this.service.deleteProduct(req.params.id);
-    res.status(200).json({
-      success: true,
-      data: product,
-    });
+    await this.service.deleteProduct(req.params.id);
+    res.sendStatus(204);
   });
 }
 
