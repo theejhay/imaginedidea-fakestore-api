@@ -8,14 +8,19 @@ export interface AuthRequest extends Request {
 const authMiddleware: RequestHandler = (req, _res, next) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
+  const secret = process.env.JWT_SECRET;
+
+  if(!secret){
+    throw new Error("JWT_SECRET is not configured");
+  }
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
     throw new Error("No token provided");
   }
 
   const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    const decoded = jwt.verify(token, secret);
 
     (req as AuthRequest).user = decoded;
 
