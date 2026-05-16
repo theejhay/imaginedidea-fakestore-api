@@ -25,15 +25,23 @@ class AuthService {
       throw err;
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET as string, {
+    const tokenPayload = {
+      uuid: user.uuid,
+      username: user.username,
+      email: user.email,
+    };
+
+    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET as string, {
       expiresIn: "1d",
     });
 
-    const { password: _, ...safeUser } = user;
+    const { password: _, id: __, ...safeUser } = user;
 
     return {
-      user: safeUser,
-      token,
+      user: {
+        ...tokenPayload,
+        token,
+      },
     };
   }
 }

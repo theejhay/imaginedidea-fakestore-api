@@ -11,4 +11,4 @@ COPY . .
 
 RUN npx tsc
 
-CMD ["node", "dist/server.js"]
+CMD ["npm", "run", "dev"]

@@ -18,27 +18,27 @@ class UserController {
   });
 
   getUserById = asyncHandler(async (req: Request, res: Response) => {
-    const id = req.params.id as string;
+    const uuid = req.params.uuid as string;
 
-    const user = await this.service.getUserById(id);
+    const user = await this.service.getUserByUuid(uuid);
 
     res.json({ success: true, data: user });
   });
 
   updateUser = asyncHandler(async (req: Request, res: Response) => {
-    const id = req.params.id as string;
+    const uuid = req.params.uuid as string;
 
-    const updated = await this.service.updateUser(id, req.body);
+    const updated = await this.service.updateUser(uuid, req.body);
 
     res.json({ success: true, data: updated });
   });
 
   deleteUser = asyncHandler(async (req: Request, res: Response) => {
-    const id = req.params.id as string;
+    const uuid = req.params.uuid as string;
 
-    const result = await this.service.deleteUser(id);
+    await this.service.deleteUser(uuid);
 
-    res.json({ success: true, data: result });
+    res.status(204).send();
   });
 }
 

@@ -16,13 +16,13 @@ router.post(
 );
 
 router.get("/", authMiddleware, controller.getUsers);
-router.get("/:id", authMiddleware, controller.getUserById);
+router.get("/:uuid", authMiddleware, controller.getUserById);
 router.put(
-  "/:id",
+  "/:uuid",
   authMiddleware,
   validate(updateUserSchema),
   controller.updateUser,
 );
-router.delete("/:id", authMiddleware, controller.deleteUser);
+router.delete("/:uuid", authMiddleware, controller.deleteUser);
 
 export default router;

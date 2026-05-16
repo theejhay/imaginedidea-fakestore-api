@@ -5,6 +5,8 @@ services:
       - "4000:4000"
     env_file:
       - .env
+    volumes:
+      - ./src:/src/src
     depends_on:
       mongo:
         condition: service_started
