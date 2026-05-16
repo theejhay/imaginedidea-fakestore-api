@@ -10,7 +10,7 @@ const errorMiddleware = (
   res: Response,
   _next: NextFunction,
 ) => {
-  const statusCode = err.statusCode || 500;
+  const statusCode = err.statusCode ?? 500;
 
   res.status(statusCode).json({
     success: false,
