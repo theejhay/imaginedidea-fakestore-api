@@ -26,9 +26,22 @@ class ProductService {
 
   async getProductById(id: any) {
     validateObjectId(id);
+    const product = await this.repo.findById(id);
+    if(!product){
+      const err: any = new Error("Product not found!")
+      err.statusCode = 404;
+      throw err;
+    }
     return this.repo.findById(id);
   }
   async updateProduct(id: any, data: any) {
+     validateObjectId(id);
+    const product = await this.repo.findById(id);
+    if(!product){
+      const err: any = new Error("Product not found!")
+      err.statusCode = 404;
+      throw err;
+    }
     return this.repo.update(id, data);
   }
 
