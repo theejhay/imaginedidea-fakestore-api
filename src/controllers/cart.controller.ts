@@ -23,6 +23,7 @@ class CartController {
 
   getCartById = asyncHandler(async (req: Request, res: Response) => {
     const cart = await this.service.getCartById(req.params.id);
+    if (!cart) throw new Error("Cart not found");
     res.json({
       success: true,
       data: cart,
@@ -31,18 +32,15 @@ class CartController {
 
   updateCart = asyncHandler(async (req: Request, res: Response) => {
     const cart = await this.service.updateCart(req.params.id, req.body);
-    res.json({
+    res.status(200).json({
       success: true,
       data: cart,
     });
   });
 
   deleteCart = asyncHandler(async (req: Request, res: Response) => {
-    const cart = await this.service.deleteCart(req.params.id);
-    res.json({
-      success: true,
-      data: cart,
-    });
+    await this.service.deleteCart(req.params.id);
+    res.sendStatus(204);
   });
 }
 
